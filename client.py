@@ -12,12 +12,14 @@ def setUpSocket(host, id, port):
     message = mySocket.recv(1024)
     decodedMessage = message.decode('utf8', 'strict')
 
-    raise Exception(decodedMessage[:20])
 
     while (decodedMessage[:20] != 'cs3700spring2021 BYE'):
+
         if (decodedMessage[:21] != 'cs3700spring2021 FIND'):
             raise Exception("Received message was not as expected:" + decodedMessage)
-        strings = decodedMessage[21:len(decodedMessage) - 1]
+
+        strings = decodedMessage[22:len(decodedMessage) - 1]
+        raise Exception(strings)
         symbol = strings.split()[0]
         searchString = strings.split()[1]
         count = 0
