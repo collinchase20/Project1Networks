@@ -5,7 +5,8 @@ import argparse
 def setUpSocket(host, id, port):
     mySocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     mySocket.connect((host, port))
-    mySocket.send('cs3700spring2021 HELLO ' + id + '\n')
+    sendString = 'cs3700spring2021 HELLO ' + id + '\n'
+    mySocket.send(str.encode(sendString))
     message = mySocket.recv(1024)
 
     while (message[:20] != 'cs3700spring2021 BYE'):
@@ -20,12 +21,12 @@ def setUpSocket(host, id, port):
             if item == symbol:
                 count += 1
 
-        mySocket.send('cs3700spring2021 COUNT ' + str(count) + '\n')
+        newSendString = 'cs3700spring2021 COUNT ' + str(count) + '\n'
+        mySocket.send(str.encode(newSendString))
         message = mySocket.recv(1024)
 
-
-    flag = message.split()[2]
     print(message)
+    flag = message.split()[2]
     mySocket.close()
 
 
