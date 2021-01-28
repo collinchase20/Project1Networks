@@ -34,7 +34,6 @@ def setUpSocket(host, id, port):
         decodedMessage = createMessage(mySocket)
 
 
-    print(decodedMessage)
     flag = decodedMessage.split()[2]
     print(flag)
     mySocket.close()
