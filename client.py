@@ -37,6 +37,8 @@ def setUpSocket(host, id, port):
 
         message = mySocket.recv(1024)
         decodedMessage = message.decode('utf8', 'strict')
+        
+        raise Exception(decodedMessage)
 
     print(message)
     flag = message.split()[2]
