@@ -5,15 +5,17 @@ import argparse
 def setUpSocket(host, id, port):
     mySocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     mySocket.connect((host, port))
-    sendString = 'cs3700spring2021 HELLO ' + id + '\n'
-    mySocket.send(str.encode(sendString))
-    message = mySocket.recv(1024)
-    message = message.decode('utf8', 'strict')
 
-    while (message[:20] != 'cs3700spring2021 BYE'):
-        if (message[:21] != 'cs3700spring2021 FIND'):
-            raise Exception("Received message was not as expected:" + message)
-        strings = message[21:len(message) - 1]
+    helloMessage = 'cs3700spring2021 HELLO ' + id + '\n'
+    mySocket.send(str.encode(helloMessage))
+
+    message = mySocket.recv(1024)
+    decodedMessage = message.decode('utf8', 'strict')
+
+    while (decodedMessage[:20] != 'cs3700spring2021 BYE'):
+        if (decodedMessage[:21] != 'cs3700spring2021 FIND'):
+            raise Exception("Received message was not as expected:" + decodedMessage)
+        strings = decodedMessage[21:len(decodedMessage) - 1]
         symbol = strings.split()[0]
         searchString = strings.split()[1]
         count = 0
@@ -22,9 +24,11 @@ def setUpSocket(host, id, port):
             if item == symbol:
                 count += 1
 
-        newSendString = 'cs3700spring2021 COUNT ' + str(count) + '\n'
-        mySocket.send(str.encode(newSendString))
+        countMessage = 'cs3700spring2021 COUNT ' + str(count) + '\n'
+        mySocket.send(str.encode(countMessage))
+
         message = mySocket.recv(1024)
+        decodedMessage = message.decode('utf8', 'strict')
 
     print(message)
     flag = message.split()[2]
