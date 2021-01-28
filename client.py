@@ -12,8 +12,6 @@ def setUpSocket(host, id, port):
 
     iterations = 0
 
-    raise Exception (decodedMessage)
-
     while (decodedMessage[:20] != 'cs3700spring2021 BYE'):
 
         if (decodedMessage[:21] != 'cs3700spring2021 FIND'):
@@ -50,9 +48,7 @@ def createMessage(mySocket):
         message = mySocket.recv(1024)
         partOfMessage = message.decode('utf8', 'strict')
         endingSequence = partOfMessage[-1]
-        print(endingSequence)
         decodedMessage += partOfMessage
-        print(decodedMessage)
         if endingSequence == "\n":
             sequenceNotOver = False
 
