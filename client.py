@@ -8,6 +8,7 @@ def setUpSocket(host, id, port):
     sendString = 'cs3700spring2021 HELLO ' + id + '\n'
     mySocket.send(str.encode(sendString))
     message = mySocket.recv(1024)
+    message = message.decode()
 
     while (message[:20] != 'cs3700spring2021 BYE'):
         if (message[:21] != 'cs3700spring2021 FIND'):
