@@ -12,6 +12,8 @@ def setUpSocket(host, id, port):
     message = mySocket.recv(1024)
     decodedMessage = message.decode('utf8', 'strict')
 
+    raise Exception(decodedMessage)
+
     while (decodedMessage[:20] != 'cs3700spring2021 BYE'):
         if (decodedMessage[:21] != 'cs3700spring2021 FIND'):
             raise Exception("Received message was not as expected:" + decodedMessage)
