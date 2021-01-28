@@ -18,7 +18,8 @@ def setUpSocket(host, id, port):
         endingSequence = partOfMessage[-2:]
         print(endingSequence)
         decodedMessage += partOfMessage
-        if endingSequence == '\n':
+        print(decodedMessage)
+        if endingSequence == "\n":
             sequenceNotOver = False
 
     iterations = 0
