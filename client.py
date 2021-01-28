@@ -8,24 +8,11 @@ def setUpSocket(host, id, port):
 
     helloMessage = 'cs3700spring2021 HELLO ' + id + '\n'
     mySocket.send(str.encode(helloMessage))
-
-    decodedMessage = ''
-    sequenceNotOver = True
-
-    while sequenceNotOver:
-        message = mySocket.recv(1024)
-        partOfMessage = message.decode('utf8', 'strict')
-        endingSequence = partOfMessage[-2:]
-        print(endingSequence)
-        decodedMessage += partOfMessage
-        print(decodedMessage)
-        if endingSequence == "\n":
-            sequenceNotOver = False
+    decodedMessage = createMessage(mySocket)
 
     iterations = 0
 
-    raise Exception(decodedMessage)
-
+    raise Exception (decodedMessage)
 
     while (decodedMessage[:20] != 'cs3700spring2021 BYE'):
 
@@ -46,11 +33,31 @@ def setUpSocket(host, id, port):
 
         countMessage = 'cs3700spring2021 COUNT ' + str(count) + '\n'
         mySocket.send(str.encode(countMessage))
+        decodedMessage = createMessage(mySocket)
 
 
     print(decodedMessage)
     flag = decodedMessage.split()[2]
+    print(flag)
     mySocket.close()
+
+
+def createMessage(mySocket):
+    decodedMessage = ''
+    sequenceNotOver = True
+
+    while sequenceNotOver:
+        message = mySocket.recv(1024)
+        partOfMessage = message.decode('utf8', 'strict')
+        endingSequence = partOfMessage[-1]
+        print(endingSequence)
+        decodedMessage += partOfMessage
+        print(decodedMessage)
+        if endingSequence == "\n":
+            sequenceNotOver = False
+
+    return decodedMessage
+
 
 
 
