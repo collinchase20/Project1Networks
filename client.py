@@ -19,15 +19,12 @@ def setUpSocket(host, id, port):
             raise Exception("Received message was not as expected:" + decodedMessage)
 
         symbolAndCharacters = decodedMessage[22:len(decodedMessage) - 1]
-
         symbol = symbolAndCharacters.split()[0]
-        searchCharacters = symbolAndCharacters.split()[1]
-
-        raise Exception(symbol + " That was the symbol and this is the characters " + searchCharacters)
+        characters = symbolAndCharacters.split()[1]
 
         count = 0
 
-        for item in searchString:
+        for item in characters:
             if item == symbol:
                 count += 1
 
