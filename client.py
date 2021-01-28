@@ -16,12 +16,13 @@ def setUpSocket(host, id, port):
         message = mySocket.recv(1024)
         partOfMessage = message.decode('utf8', 'strict')
         endingSequence = partOfMessage[-2:]
+        print(endingSequence)
         decodedMessage += partOfMessage
         if endingSequence == '\n':
             sequenceNotOver = False
 
     iterations = 0
-    
+
     raise Exception(decodedMessage)
 
 
