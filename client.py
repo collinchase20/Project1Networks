@@ -8,9 +8,7 @@ def setUpSocket(host, id, port):
 
     helloMessage = 'cs3700spring2021 HELLO ' + id + '\n'
     mySocket.send(str.encode(helloMessage))
-
-    message = mySocket.recv(1024)
-    decodedMessage = message.decode('utf8', 'strict')
+    decodedMessage = createMessage(mySocket)
 
     iterations = 0
 
@@ -34,15 +32,28 @@ def setUpSocket(host, id, port):
 
         countMessage = 'cs3700spring2021 COUNT ' + str(count) + '\n'
         mySocket.send(str.encode(countMessage))
+        decodedMessage = createMessage(mySocket)
 
-        message = mySocket.recv(1024)
-        decodedMessage = message.decode('utf8', 'strict')
-        
-        raise Exception(decodedMessage)
 
-    print(message)
-    flag = message.split()[2]
+    print(decodedMessage)
+    flag = decodedMessage.split()[2]
     mySocket.close()
+
+
+def createMessage(s):
+    decodedMessage = ''
+    didSequenceEnd = False
+
+    while not didSequenceEnd:
+        message = s.recv(1024)
+        partOfMessage = message.decode('utf8', 'strict')
+        endingSequence = partOfMessage[-2:]
+        decodedMessage += partOfMessage
+        if endingSequence == '\n':
+            didSequenceEnd = True
+
+    return decodedMessage
+
 
 
 def main():
