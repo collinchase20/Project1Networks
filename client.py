@@ -98,7 +98,10 @@ def runScript():
     else:
         #Here we know we are using an SSL connection. We are now checking if the port argument was provided
         #if it is not provided we run the SSL connection on port 27996 as described in the extra credit
-        setUpSocket(args.hostname, args.neuid, 27996, True)
+        if (not args.p):
+            setUpSocket(args.hostname, args.neuid, 27996, True)
+        else:
+            setUpSocket(args.hostname, args.neuid, args.port, True)
 
 
 
