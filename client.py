@@ -84,8 +84,8 @@ def runScript():
     #Set up an argument parser for the terminal
     parser = argparse.ArgumentParser()
 
-    #Add arguments, and set the default port to 27995 if one is not provided as described in the assignment
-    parser.add_argument('-p', '--port', type=int, default=27995)
+    #Add arguments
+    parser.add_argument('-p', '--port', type=int)
     parser.add_argument('-s', action='store_true')
     parser.add_argument('hostname')
     parser.add_argument('neuid')
@@ -94,11 +94,14 @@ def runScript():
 
     #If the ssl argument is not provided connect to the TCP socket normally
     if (not args.s):
-        setUpSocket(args.hostname, args.neuid, args.port, False)
+        if (not args.port):
+            setUpSocket(args.hostname, args.neuid, 27995, False)
+        else:
+            setUpSocket(args.hostname, args.neuid, args.port, False)
     else:
         #Here we know we are using an SSL connection. We are now checking if the port argument was provided
         #if it is not provided we run the SSL connection on port 27996 as described in the extra credit
-        if (not args.p):
+        if (not args.port):
             setUpSocket(args.hostname, args.neuid, 27996, True)
         else:
             setUpSocket(args.hostname, args.neuid, args.port, True)
