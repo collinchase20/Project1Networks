@@ -52,6 +52,7 @@ def setUpSocket(host, id, port, isSSL):
 
     flag = decodedMessage.split()[2]
     print(flag)
+    print(decodedMessage)
     mySocket.close()
 
 
