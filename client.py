@@ -3,6 +3,7 @@ import ssl
 import argparse
 
 
+#Main method to connect to the socket, can be ssl or normal, and perform the protocol required.
 def setUpSocket(host, id, port, isSSL):
     helloMessage = 'cs3700spring2021 HELLO ' + id + '\n'
     decodedMessage = ''
@@ -52,38 +53,31 @@ def setUpSocket(host, id, port, isSSL):
 
     flag = decodedMessage.split()[2]
     print(flag)
-    print(decodedMessage)
     mySocket.close()
 
 
+#Method to decode and return the message from the server as a string.
 def createMessage(mySocket, isSSL):
     decodedMessage = ''
     sequenceNotOver = True
 
-    if (isSSL):
-        while sequenceNotOver:
+    while sequenceNotOver:
+        if (isSSL):
             message = mySocket.read(1024)
-            partOfMessage = message.decode('utf8', 'strict')
-            endingSequence = partOfMessage[-1]
-            decodedMessage += partOfMessage
-            if endingSequence == "\n":
-                sequenceNotOver = False
-    else:
-        while sequenceNotOver:
+        else:
             message = mySocket.recv(1024)
-            partOfMessage = message.decode('utf8', 'strict')
-            endingSequence = partOfMessage[-1]
-            decodedMessage += partOfMessage
-            if endingSequence == "\n":
-                sequenceNotOver = False
-
+        partOfMessage = message.decode('utf8', 'strict')
+        endingSequence = partOfMessage[-1]
+        decodedMessage += partOfMessage
+        if endingSequence == "\n":
+            sequenceNotOver = False
 
     return decodedMessage
 
 
 
-
-def run():
+#Method to execute the protocol
+def runScript():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-p', '--port', type=int, default=27995)
@@ -96,9 +90,14 @@ def run():
     if (not args.s):
         setUpSocket(args.hostname, args.neuid, args.port, False)
     else:
-        setUpSocket(args.hostname, args.neuid, 27996, True)
+        if (not args.p):
+            setUpSocket(args.hostname, args.neuid, 27996, True)
+        else:
+            setUpSocket(args.hostname, args.neuid, args.port, True)
 
 
 
 
-run()
+
+#Run method to execute this file and perform the protocol
+runScript()
