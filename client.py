@@ -80,7 +80,7 @@ def createMessage(mySocket, isSSL):
                 message = mySocket.read(1024)
             else:
                 message = mySocket.recv(1024)
-            partOfMessage = message.decode('utf8', 'strict')
+            partOfMessage = message.decode()
             endingSequence = partOfMessage[-1]
             decodedMessage += partOfMessage
             if endingSequence == "\n":
